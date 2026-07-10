@@ -1,5 +1,4 @@
 .tl-wrap {
-  position: relative;
   display: block;
   width: 100%;
   max-width: 100%;
@@ -15,10 +14,6 @@
   line-height: 1.2;
 }
 .tl-marquee {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   overflow: hidden;
   width: 100%;
 }
