@@ -8,8 +8,16 @@ let marqueeRaf = null;
 let lastMarqueeActive = null;
 let lastFontSize = null;
 let lastColor = null;
+let lastFont = null;
 let lastMaxW = null;
 let lastText = null;
+
+function fontFamilyFor(key) {
+  if (key === "system") return 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+  if (key === "mono") return '"SF Mono", Menlo, Consolas, "Courier New", monospace';
+  if (key === "serif") return 'Georgia, "Times New Roman", serif';
+  return '"Inter", "Segoe UI", system-ui, sans-serif';
+}
 
 function init(config) {
   cfg = config || {};
@@ -49,6 +57,16 @@ function applyStyle() {
       copies2[j].style.color = color;
     }
     lastColor = color;
+  }
+
+  var font = fontFamilyFor(cfg.textlineFontFamily);
+  if (font !== lastFont) {
+    textEl.style.fontFamily = font;
+    var copiesFont = marqueeEl ? marqueeEl.querySelectorAll(".tl-marquee-text") : [];
+    for (var f = 0; f < copiesFont.length; f++) {
+      copiesFont[f].style.fontFamily = font;
+    }
+    lastFont = font;
   }
 
   var fs = Number(cfg.textlineFontSize) || 28;
@@ -141,6 +159,7 @@ function destroy() {
   lastMarqueeActive = null;
   lastFontSize = null;
   lastColor = null;
+  lastFont = null;
   lastMaxW = null;
   lastText = null;
 }

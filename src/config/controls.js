@@ -808,6 +808,13 @@ function renderStyleContent() {
       <div class="cfg-inline-row">
         <input id="ctrl-textline-color" type="color" value="${state.textlineColor || "#ffffff"}" />
       </div>
+      <div class="cfg-sub-label" style="margin-top:10px">Font</div>
+      <div class="cfg-btn-group cfg-btn-group-wrap">
+        <button type="button" class="cfg-btn cfg-sm-btn ${state.textlineFontFamily === "inter" ? "cfg-active" : ""}" data-set-key="textlineFontFamily" data-set-value="inter">Inter</button>
+        <button type="button" class="cfg-btn cfg-sm-btn ${state.textlineFontFamily === "system" ? "cfg-active" : ""}" data-set-key="textlineFontFamily" data-set-value="system">System</button>
+        <button type="button" class="cfg-btn cfg-sm-btn ${state.textlineFontFamily === "mono" ? "cfg-active" : ""}" data-set-key="textlineFontFamily" data-set-value="mono">Mono</button>
+        <button type="button" class="cfg-btn cfg-sm-btn ${state.textlineFontFamily === "serif" ? "cfg-active" : ""}" data-set-key="textlineFontFamily" data-set-value="serif">Serif</button>
+      </div>
       <div class="cfg-section-sep"></div>
       <div class="cfg-sub-label">Background</div>
       <div class="cfg-inline-row">
