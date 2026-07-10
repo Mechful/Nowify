@@ -1,4 +1,4 @@
-const WORKER_BASE_URL = "https://nowify.mechful.com";
+import { WORKER_BASE_URL, WORKER_WRITE_KEY } from "../config/constants.js";
 const MAX_SESSION_TRACKS = 500;
 const BANGER_VOTE_THRESHOLD = 5;
 const BANGER_CHAT_THRESHOLD = 10;
@@ -136,7 +136,7 @@ export async function saveToWorker(streamerId) {
   for (const track of sessionTracks) {
     const url = `${WORKER_BASE_URL}/history?streamerId=${encodeURIComponent(
       streamerId || ""
-    )}`;
+    )}${WORKER_WRITE_KEY ? `&key=${encodeURIComponent(WORKER_WRITE_KEY)}` : ""}`;
     try {
       const response = await fetch(url, {
         method: "POST",

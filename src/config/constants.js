@@ -159,6 +159,11 @@ export const SONGIFY_STATUS_TTL_MS = 30_000;
 
 export const CUSTOM_PRESETS_KEY = "nowify_custom_presets";
 export const WORKER_BASE_URL = "https://nowify.mechful.com";
+// Optional: if your worker sets WORKER_WRITE_KEY, put the same value here so
+// writes (history/presets) are accepted. Leave empty to disable the check.
+// NOTE: this is shipped in client JS, so it only stops casual abuse — the
+// worker's per-IP rate limit is the real protection.
+export const WORKER_WRITE_KEY = "";
 export const PUBLIC_PRESETS_CACHE_KEY = "nowify_public_presets_v1";
 export const PUBLIC_PRESETS_CACHE_MS = 5 * 60 * 1000;
 

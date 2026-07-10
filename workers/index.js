@@ -19,6 +19,44 @@ function errorResponse(message, status = 400, env) {
   return jsonResponse({ error: message }, status, env);
 }
 
+/**
+ * Per-IP rate limit using the existing HISTORY KV (key prefix "rl:").
+ * Returns an error Response if exceeded, otherwise null.
+ * Limits are deliberately generous for normal use but bound abuse.
+ */
+async function rateLimit(request, env, bucket, limit, windowSec) {
+  const kv = env.HISTORY;
+  if (!kv) return null;
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const window = Math.floor(Date.now() / 1000 / windowSec);
+  const key = `rl:${bucket}:${ip}:${window}`;
+  const raw = await kv.get(key);
+  const count = raw ? parseInt(raw, 10) || 0 : 0;
+  if (count >= limit) {
+    return errorResponse("Rate limit exceeded", 429, env);
+  }
+  await kv.put(key, String(count + 1), { expirationTtl: windowSec + 10 });
+  return null;
+}
+
+/**
+ * Optional write protection. If WORKER_WRITE_KEY is configured, all
+ * POST/DELETE requests must include ?key=<secret> (or header x-nowify-key).
+ * Frontend sends it; this stops casual/unauthenticated abuse. Note: the key
+ * lives in client JS so it is defence-in-depth, not a hard secret — the rate
+ * limit above is the primary control against cost/abuse.
+ */
+function writeAuthError(request, env, url) {
+  const key = env.WORKER_WRITE_KEY;
+  if (!key) return null;
+  const provided =
+    url.searchParams.get("key") || request.headers.get("x-nowify-key");
+  if (provided !== key) {
+    return errorResponse("Unauthorized", 401, env);
+  }
+  return null;
+}
+
 function toBase64Url(input) {
   return btoa(input).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
@@ -46,6 +84,22 @@ export default {
 
     if (method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(env) });
+    }
+
+    const isWrite = method === "POST" || method === "DELETE";
+
+    const rl = await rateLimit(
+      request,
+      env,
+      isWrite ? "write" : "read",
+      isWrite ? 30 : 200,
+      60
+    );
+    if (rl) return rl;
+
+    if (isWrite && path !== "/youtube/webhook") {
+      const auth = writeAuthError(request, env, url);
+      if (auth) return auth;
     }
 
     if (path === "/apple-token") return handleAppleToken(request, env);

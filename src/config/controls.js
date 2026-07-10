@@ -13,6 +13,7 @@ import {
   TOGGLE_KEY_TIPS,
   TWITCH_COMMAND_ORDER,
   WORKER_BASE_URL,
+  WORKER_WRITE_KEY,
 } from "./constants.js";
 import {
   applyLayoutOverlayConstraints,
@@ -1139,7 +1140,9 @@ async function publishCustomPresetWithPrompt() {
   const customState = loadCustomState();
   if (!customState) return;
 
-  const res = await fetch(`${WORKER_BASE_URL}/presets`, {
+  const res = await fetch(
+    `${WORKER_BASE_URL}/presets${WORKER_WRITE_KEY ? `?key=${encodeURIComponent(WORKER_WRITE_KEY)}` : ""}`,
+    {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -1437,7 +1440,9 @@ function paintPublicPresetList(listEl, presets) {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-public-delete");
       const ownerKey = getOrCreateOwnerKey();
-      const res = await fetch(`${WORKER_BASE_URL}/presets/${id}`, {
+      const res = await fetch(
+        `${WORKER_BASE_URL}/presets/${id}${WORKER_WRITE_KEY ? `?key=${encodeURIComponent(WORKER_WRITE_KEY)}` : ""}`,
+        {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ownerKey }),
