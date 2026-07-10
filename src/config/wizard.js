@@ -237,6 +237,17 @@ function renderStep2() {
   }
 
   if (chosenSource === "lastfm") {
+    let seedApiKey = "";
+    let seedUsername = "";
+    const savedLastfm = localStorage.getItem("nowify_lastfm");
+    if (savedLastfm) {
+      try {
+        const parsed = JSON.parse(savedLastfm);
+        seedApiKey = parsed.apiKey || "";
+        seedUsername = parsed.username || "";
+      } catch (_error) {}
+    }
+
     body.innerHTML = `
       <div class="wiz-step-inner">
         <h1 class="wiz-title">Set up Last.fm</h1>
@@ -270,7 +281,7 @@ function renderStep2() {
               <div class="wiz-instruction-body">
                 <a href="https://www.last.fm/api/account/create" target="_blank" rel="noopener noreferrer" class="wiz-link">last.fm/api/account/create</a>
                 Any app name. Copy the API key shown.
-                <input type="text" id="wiz-lastfm-apikey" class="wiz-input" placeholder="Last.fm API key" />
+                <input type="text" id="wiz-lastfm-apikey" class="wiz-input" placeholder="Last.fm API key" value="${escAttr(seedApiKey)}" />
               </div>
             </div>
           </div>
@@ -279,7 +290,7 @@ function renderStep2() {
             <div>
               <div class="wiz-instruction-title">Enter your username</div>
               <div class="wiz-instruction-body">
-                <input type="text" id="wiz-lastfm-username" class="wiz-input" placeholder="Last.fm username" />
+                <input type="text" id="wiz-lastfm-username" class="wiz-input" placeholder="Last.fm username" value="${escAttr(seedUsername)}" />
               </div>
             </div>
           </div>

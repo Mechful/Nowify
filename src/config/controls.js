@@ -1,4 +1,4 @@
-import { initWizard, isSetupComplete, showWizard } from "./wizard.js";
+import { initWizard, isSetupComplete, markSetupComplete, showWizard } from "./wizard.js";
 import {
   ANIM_BG_STYLE_TIPS,
   CUSTOM_PRESETS_KEY,
@@ -1850,28 +1850,36 @@ export function initConfig() {
   }
 
   if (!isSetupComplete()) {
-    initWizard((chosenSource) => {
-      state.source = chosenSource;
-      const savedLastfm = localStorage.getItem("nowify_lastfm");
-      const savedSongify = localStorage.getItem("nowify_songify");
-      if (savedLastfm) {
-        try {
-          const parsed = JSON.parse(savedLastfm);
-          state.lastfmUsername = parsed.username || "";
-          state.lastfmApiKey = parsed.apiKey || "";
-        } catch (_error) {}
-      }
-      if (savedSongify) {
-        try {
-          const parsed = JSON.parse(savedSongify);
-          state.songifyPort = Number(parsed.port) || 4002;
-        } catch (_error) {}
-      }
+    const hasExistingCreds =
+      localStorage.getItem("nowify_lastfm") ||
+      localStorage.getItem("nowify_client_id") ||
+      localStorage.getItem("nowify_songify");
+    if (hasExistingCreds) {
+      markSetupComplete();
+    } else {
+      initWizard((chosenSource) => {
+        state.source = chosenSource;
+        const savedLastfm = localStorage.getItem("nowify_lastfm");
+        const savedSongify = localStorage.getItem("nowify_songify");
+        if (savedLastfm) {
+          try {
+            const parsed = JSON.parse(savedLastfm);
+            state.lastfmUsername = parsed.username || "";
+            state.lastfmApiKey = parsed.apiKey || "";
+          } catch (_error) {}
+        }
+        if (savedSongify) {
+          try {
+            const parsed = JSON.parse(savedSongify);
+            state.songifyPort = Number(parsed.port) || 4002;
+          } catch (_error) {}
+        }
 
-      finishInit();
-      update({ source: chosenSource });
-    });
-    return;
+        finishInit();
+        update({ source: chosenSource });
+      });
+      return;
+    }
   }
 
   finishInit();
