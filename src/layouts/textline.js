@@ -5,6 +5,7 @@ let marqueeEl = null;
 let marqueeInner = null;
 let currentTrack = null;
 let marqueeRaf = null;
+let lastMarqueeActive = null;
 
 function init(config) {
   cfg = config || {};
@@ -60,26 +61,20 @@ function applyStyle() {
 function checkMarquee() {
   marqueeRaf = null;
   if (!textEl || !rootEl) return;
-  var overflows =
+  var active =
     cfg.textlineMarquee && textEl.scrollWidth > textEl.clientWidth;
-  console.log("[textline] marquee check:", {
-    enabled: cfg.textlineMarquee,
-    scrollWidth: textEl.scrollWidth,
-    clientWidth: textEl.clientWidth,
-    overflows: overflows,
-    maxW: rootEl.style.maxWidth,
-    text: textEl.textContent,
-  });
-  if (overflows) {
+  if (active === lastMarqueeActive) return;
+  lastMarqueeActive = active;
+  if (active) {
     textEl.style.display = "none";
     marqueeEl.style.display = "";
-    marqueeEl.classList.remove("tl-marquee-rtl", "tl-marquee-ltr");
     marqueeEl.classList.add(
       cfg.textlineMarqueeDir === "ltr" ? "tl-marquee-ltr" : "tl-marquee-rtl",
     );
   } else {
     textEl.style.display = "";
     marqueeEl.style.display = "none";
+    marqueeEl.classList.remove("tl-marquee-rtl", "tl-marquee-ltr");
   }
 }
 
@@ -111,6 +106,7 @@ function destroy() {
   marqueeInner = null;
   currentTrack = null;
   marqueeRaf = null;
+  lastMarqueeActive = null;
 }
 
 export { init, render, destroy };
