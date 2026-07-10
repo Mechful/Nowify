@@ -798,6 +798,17 @@ function renderStyleContent() {
         <button class="cfg-btn cfg-sm-btn ${state.cassetteStyle === "mixtape" ? "cfg-active" : ""}" data-set-key="cassetteStyle" data-set-value="mixtape">Mixtape</button>
       </div>`;
     }
+    if (state.layout === "textline") {
+      return `<div class="cfg-sub-label">Font size</div>
+      <div class="cfg-slider-row">
+        <input id="ctrl-textline-font-size" type="range" min="12" max="72" step="1" value="${state.textlineFontSize || 28}" />
+        <span class="cfg-slider-val" id="ctrl-textline-font-size-val">${state.textlineFontSize || 28}px</span>
+      </div>
+      <div class="cfg-sub-label" style="margin-top:10px">Text color</div>
+      <div class="cfg-inline-row">
+        <input id="ctrl-textline-color" type="color" value="${state.textlineColor || "#ffffff"}" />
+      </div>`;
+    }
     return "";
   }
   return `<button type="button" class="cfg-btn cfg-sm-btn cfg-btn-secondary cfg-open-custom-editor" id="btn-open-custom-editor" data-cfg-tip="${escAttr("Switch to custom layout with the full visual editor.")}">Open custom editor</button>`;
@@ -1517,6 +1528,16 @@ async function openPresetsModal(options = {}) {
         layout: "spotifycard",
         theme: "obsidian",
         transparent: false,
+      },
+    },
+    {
+      name: "textline",
+      label: "Text Line",
+      desc: "Minimal one-line text",
+      state: {
+        layout: "textline",
+        theme: "obsidian",
+        transparent: true,
       },
     },
   ];

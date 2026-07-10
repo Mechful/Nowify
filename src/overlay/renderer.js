@@ -797,6 +797,8 @@ export function parseConfig() {
     twitchToken: params.get("twitchToken") || "",
     lastfmUsername: params.get("lastfmUsername") || "",
     lastfmApiKey: params.get("lastfmApiKey") || "",
+    textlineFontSize: Number(params.get("textlineFontSize")) || 28,
+    textlineColor: params.get("textlineColor") || "#ffffff",
     custom,
   };
 }

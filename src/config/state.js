@@ -144,6 +144,8 @@ export const DEFAULT_STATE = {
   animBgColor2: "rgba(30,30,80,0.8)",
   artBackdropEnabled: false,
   artBackdropBlur: 48,
+  textlineFontSize: 28,
+  textlineColor: "#ffffff",
 };
 
 /** Seeds custom editor from sidebar state (custom layout). */

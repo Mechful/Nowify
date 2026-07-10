@@ -14,6 +14,7 @@ let transitionEnterDurDebounceTimer = null;
 let transitionExitDurDebounceTimer = null;
 let transitionExitDelayDebounceTimer = null;
 let twitchCmdSliderDebounceTimer = null;
+let textlineFontSizeTimer = null;
 let mainSidebarBound = false;
 let queueSidebarBound = false;
 
@@ -241,6 +242,11 @@ export function initMainSidebarEvents(updateFn, callbacks = {}) {
       return;
     }
 
+    if (target.id === "ctrl-textline-color") {
+      updateFn({ textlineColor: target.value });
+      return;
+    }
+
     if (target.id === "ctrl-songifyPort") {
       const val = Number(target.value);
       if (Number.isInteger(val) && val >= 1024 && val <= 65535) {
@@ -334,6 +340,25 @@ export function initMainSidebarEvents(updateFn, callbacks = {}) {
           updateFn({ exitDelay: val });
         }
       }, 200);
+      return;
+    }
+
+    if (target.id === "ctrl-textline-font-size") {
+      const val = Number(target.value);
+      const label = document.getElementById("ctrl-textline-font-size-val");
+      if (label && Number.isFinite(val)) {
+        label.textContent = val + "px";
+      }
+      handleRangeDebounce(textlineFontSizeTimer, () => {
+        if (Number.isFinite(val)) {
+          updateFn({ textlineFontSize: val });
+        }
+      }, 100);
+      return;
+    }
+
+    if (target.id === "ctrl-textline-color") {
+      updateFn({ textlineColor: target.value });
       return;
     }
 

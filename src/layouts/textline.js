@@ -10,6 +10,13 @@ function init(config) {
   app.innerHTML = '<div class="tl-wrap"><div class="tl-text" id="tl-text"></div></div>';
   rootEl = app.querySelector(".tl-wrap");
   textEl = document.getElementById("tl-text");
+  applyStyle();
+}
+
+function applyStyle() {
+  if (!textEl) return;
+  textEl.style.fontSize = (cfg.textlineFontSize || 28) + "px";
+  textEl.style.color = cfg.textlineColor || "#ffffff";
 }
 
 function render(track) {
@@ -22,6 +29,7 @@ function render(track) {
   } else {
     textEl.textContent = title || artist || "";
   }
+  applyStyle();
 }
 
 function destroy() {
