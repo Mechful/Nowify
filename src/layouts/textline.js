@@ -61,6 +61,11 @@ function applyStyle() {
 function checkMarquee() {
   marqueeRaf = null;
   if (!textEl || !rootEl) return;
+
+  // Ensure textEl is visible so scrollWidth/clientWidth are accurate
+  var prevDisplay = textEl.style.display;
+  if (prevDisplay === "none") textEl.style.display = "";
+
   var active =
     cfg.textlineMarquee && textEl.scrollWidth > textEl.clientWidth;
   if (active === lastMarqueeActive) return;
