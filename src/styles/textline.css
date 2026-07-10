@@ -1,0 +1,13 @@
+.tl-wrap {
+  will-change: opacity, transform, filter;
+}
+.tl-text {
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}

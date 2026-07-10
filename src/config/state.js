@@ -195,7 +195,8 @@ export function isUniqueLayout(layout) {
     layout === "gameboy" ||
     layout === "hud" ||
     layout === "stickynote" ||
-    layout === "spotifycard"
+    layout === "spotifycard" ||
+    layout === "textline"
   );
 }
 

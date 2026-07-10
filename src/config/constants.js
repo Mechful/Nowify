@@ -12,6 +12,7 @@ export const LAYOUT_LABELS = {
   hud: "HUD",
   stickynote: "Sticky Note",
   spotifycard: "Spotify Card",
+  textline: "Text Line",
   custom: "Custom",
 };
 
@@ -29,6 +30,7 @@ export const LAYOUT_HINTS_SHORT = {
   hud: "Fighter HUD preset",
   stickynote: "Pinned note preset",
   spotifycard: "Social share card preset",
+  textline: "Minimal one-line text",
   custom: "Full custom editor",
 };
 
@@ -48,6 +50,7 @@ export const LAYOUT_TOOLTIPS = {
   hud: "Heads-up display with targeting reticle.",
   stickynote: "Handwritten note with pin.",
   spotifycard: "Spotify social share card style.",
+  textline: "Song title and artist on a single transparent line.",
   custom: "Full visual editor for colors, sizing, and advanced layout.",
 };
 
@@ -104,6 +107,7 @@ export const LAYOUT_OPTIONS = {
   hud: { showProgress: true, showBpm: true, transparent: true, moodSync: false },
   stickynote: { showProgress: true, showBpm: false, transparent: true, moodSync: false },
   spotifycard: { showProgress: true, showBpm: false, transparent: false, moodSync: false },
+  textline: { showProgress: false, showBpm: false, transparent: true, moodSync: false },
   custom: { showProgress: true, showBpm: true, transparent: true, moodSync: true },
 };
 
@@ -135,6 +139,11 @@ export const LAYOUT_CONTENT = {
   },
   sidebar: {
     showProgress: true, showTimeLeft: false, showNextTrack: false,
+    showBpm: false, showAlbum: false, showPlayState: false,
+    stackDir: false, artPosition: false,
+  },
+  textline: {
+    showProgress: false, showTimeLeft: false, showNextTrack: false,
     showBpm: false, showAlbum: false, showPlayState: false,
     stackDir: false, artPosition: false,
   },

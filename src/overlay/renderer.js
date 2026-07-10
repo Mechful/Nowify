@@ -162,7 +162,8 @@ function isSpecialLayout(layout) {
     layout === "gameboy" ||
     layout === "hud" ||
     layout === "stickynote" ||
-    layout === "spotifycard"
+    layout === "spotifycard" ||
+    layout === "textline"
   );
 }
 
@@ -205,6 +206,10 @@ async function getSpecialPreset(layout) {
   if (layout === "spotifycard") {
     ensureStylesheet("src/styles/spotifycard.css");
     return import("../layouts/spotifycard.js");
+  }
+  if (layout === "textline") {
+    ensureStylesheet("src/styles/textline.css");
+    return import("../layouts/textline.js");
   }
   return null;
 }

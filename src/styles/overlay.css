@@ -97,7 +97,8 @@ body { background: transparent; overflow: hidden;
 .gb-wrap,
 .hud-wrap,
 .sn-wrap,
-.sc-wrap {
+.sc-wrap,
+.tl-wrap {
   will-change: opacity, transform, filter;
 }
 
@@ -108,7 +109,8 @@ body { background: transparent; overflow: hidden;
 .gb-wrap[data-hidden="true"],
 .hud-wrap[data-hidden="true"],
 .sn-wrap[data-hidden="true"],
-.sc-wrap[data-hidden="true"] {
+.sc-wrap[data-hidden="true"],
+.tl-wrap[data-hidden="true"] {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
