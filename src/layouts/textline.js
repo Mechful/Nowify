@@ -61,8 +61,8 @@ function checkMarquee() {
   if (overflows) {
     textEl.style.display = "none";
     marqueeEl.style.display = "";
-    marqueeInner.classList.remove("tl-marquee-rtl", "tl-marquee-ltr");
-    marqueeInner.classList.add(
+    marqueeEl.classList.remove("tl-marquee-rtl", "tl-marquee-ltr");
+    marqueeEl.classList.add(
       cfg.textlineMarqueeDir === "ltr" ? "tl-marquee-ltr" : "tl-marquee-rtl",
     );
   } else {
