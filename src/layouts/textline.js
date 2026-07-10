@@ -36,6 +36,10 @@ function applyStyle() {
     copies[i].style.color = color;
   }
 
+  var fs = Number(cfg.textlineFontSize) || 28;
+  var maxW = Math.min(window.innerWidth * 0.85, fs * 20);
+  rootEl.style.maxWidth = maxW + "px";
+
   var bgColor = cfg.textlineBgColor || "#000000";
   var bgOpacity = Number(cfg.textlineBgOpacity) || 0;
   if (bgOpacity > 0) {
@@ -58,6 +62,14 @@ function checkMarquee() {
   if (!textEl || !rootEl) return;
   var overflows =
     cfg.textlineMarquee && textEl.scrollWidth > textEl.clientWidth;
+  console.log("[textline] marquee check:", {
+    enabled: cfg.textlineMarquee,
+    scrollWidth: textEl.scrollWidth,
+    clientWidth: textEl.clientWidth,
+    overflows: overflows,
+    maxW: rootEl.style.maxWidth,
+    text: textEl.textContent,
+  });
   if (overflows) {
     textEl.style.display = "none";
     marqueeEl.style.display = "";

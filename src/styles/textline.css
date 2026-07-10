@@ -1,7 +1,7 @@
 .tl-wrap {
   display: block;
   width: 100%;
-  max-width: min(85vw, 480px);
+  max-width: 100%;
   overflow: hidden;
   will-change: opacity, transform, filter;
 }
