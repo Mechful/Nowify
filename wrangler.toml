@@ -7,14 +7,18 @@ main = "workers/index.js"
 compatibility_date = "2024-01-01"
 
 [vars]
-ALLOWED_ORIGIN = "https://kelvinph.github.io"
+ALLOWED_ORIGIN = "https://mechful.com"
+
+routes = [
+  { pattern = "nowify.mechful.com", custom_domain = true }
+]
 
 [[kv_namespaces]]
 binding = "HISTORY"
-id = "4518f1c9eff449fcaa1c658eff1384a8"
-preview_id = "4518f1c9eff449fcaa1c658eff1384a8"
+id = "5b9516f08cdb4e08a09759aacef112d1"
+preview_id = "5b9516f08cdb4e08a09759aacef112d1"
 
 [[kv_namespaces]]
 binding = "THEMES"
-id = "25c3d434daad4359897369905fb60e2e"
-preview_id = "25c3d434daad4359897369905fb60e2e"
+id = "906ba770ea16408c96281935991e9d14"
+preview_id = "906ba770ea16408c96281935991e9d14"

@@ -1,5 +1,5 @@
 const API = "https://ws.audioscrobbler.com/2.0";
-const WORKER_BASE_URL = "https://nowify-workers.ihanyadel.workers.dev";
+const WORKER_BASE_URL = "https://nowify.mechful.com";
 /** Min gap between worker proxy calls (Last.fm scrobbles are not sub-second). */
 const PROXY_MIN_INTERVAL_MS = 10_000;
 
