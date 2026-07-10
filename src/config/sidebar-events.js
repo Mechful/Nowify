@@ -14,7 +14,7 @@ let transitionEnterDurDebounceTimer = null;
 let transitionExitDurDebounceTimer = null;
 let transitionExitDelayDebounceTimer = null;
 let twitchCmdSliderDebounceTimer = null;
-let textlineFontSizeTimer = null;
+const textlineFontSizeTimer = { value: null };
 let mainSidebarBound = false;
 let queueSidebarBound = false;
 
@@ -84,6 +84,19 @@ export function patchSidebarValues() {
   const delayLabel = document.getElementById("ctrl-exit-delay-label");
   if (delayLabel) {
     delayLabel.textContent = `Pause delay (${state.exitDelay}ms)`;
+  }
+
+  const fontSizeVal = document.getElementById("ctrl-textline-font-size-val");
+  if (fontSizeVal) {
+    fontSizeVal.textContent = (state.textlineFontSize || 28) + "px";
+  }
+  const fontSizeSlider = document.getElementById("ctrl-textline-font-size");
+  if (fontSizeSlider) {
+    fontSizeSlider.value = state.textlineFontSize || 28;
+  }
+  const colorPicker = document.getElementById("ctrl-textline-color");
+  if (colorPicker) {
+    colorPicker.value = state.textlineColor || "#ffffff";
   }
 }
 
