@@ -19,7 +19,6 @@
 }
 .tl-marquee-inner {
   display: inline-flex;
-  gap: 3rem;
   white-space: nowrap;
   will-change: transform;
 }
@@ -27,6 +26,7 @@
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   font-weight: 600;
   line-height: 1.2;
+  padding-right: 3rem;
 }
 .tl-marquee-rtl .tl-marquee-inner {
   animation: tl-marquee-rtl 12s linear infinite;
