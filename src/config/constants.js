@@ -149,7 +149,7 @@ export const CONFIG_DRAFT_KEY = "nowify_config_draft";
 export const SONGIFY_STATUS_TTL_MS = 30_000;
 
 export const CUSTOM_PRESETS_KEY = "nowify_custom_presets";
-export const WORKER_BASE_URL = "https://nowify-workers.nowify.workers.dev";
+export const WORKER_BASE_URL = "https://nowify-workers.ihanyadel.workers.dev";
 export const PUBLIC_PRESETS_CACHE_KEY = "nowify_public_presets_v1";
 export const PUBLIC_PRESETS_CACHE_MS = 5 * 60 * 1000;
 
