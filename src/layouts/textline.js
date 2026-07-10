@@ -6,6 +6,10 @@ let marqueeInner = null;
 let currentTrack = null;
 let marqueeRaf = null;
 let lastMarqueeActive = null;
+let lastFontSize = null;
+let lastColor = null;
+let lastMaxW = null;
+let lastText = null;
 
 function init(config) {
   cfg = config || {};
@@ -29,17 +33,30 @@ function applyStyle() {
   if (!textEl) return;
   var fontSize = (cfg.textlineFontSize || 28) + "px";
   var color = cfg.textlineColor || "#ffffff";
-  textEl.style.fontSize = fontSize;
-  textEl.style.color = color;
-  var copies = marqueeEl ? marqueeEl.querySelectorAll(".tl-marquee-text") : [];
-  for (var i = 0; i < copies.length; i++) {
-    copies[i].style.fontSize = fontSize;
-    copies[i].style.color = color;
+
+  if (fontSize !== lastFontSize) {
+    textEl.style.fontSize = fontSize;
+    var copies = marqueeEl ? marqueeEl.querySelectorAll(".tl-marquee-text") : [];
+    for (var i = 0; i < copies.length; i++) {
+      copies[i].style.fontSize = fontSize;
+    }
+    lastFontSize = fontSize;
+  }
+  if (color !== lastColor) {
+    textEl.style.color = color;
+    var copies2 = marqueeEl ? marqueeEl.querySelectorAll(".tl-marquee-text") : [];
+    for (var j = 0; j < copies2.length; j++) {
+      copies2[j].style.color = color;
+    }
+    lastColor = color;
   }
 
   var fs = Number(cfg.textlineFontSize) || 28;
   var maxW = Math.min(window.innerWidth * 0.85, fs * 20);
-  rootEl.style.maxWidth = maxW + "px";
+  if (maxW !== lastMaxW) {
+    rootEl.style.maxWidth = maxW + "px";
+    lastMaxW = maxW;
+  }
 
   var bgColor = cfg.textlineBgColor || "#000000";
   var bgOpacity = Number(cfg.textlineBgOpacity) || 0;
@@ -62,13 +79,19 @@ function checkMarquee() {
   marqueeRaf = null;
   if (!textEl || !rootEl) return;
 
-  // Ensure textEl is visible so scrollWidth/clientWidth are accurate
-  var prevDisplay = textEl.style.display;
-  if (prevDisplay === "none") textEl.style.display = "";
+  // Measure textEl. If hidden (marquee active), show it only for measurement.
+  var wasHidden = textEl.style.display === "none";
+  if (wasHidden) textEl.style.display = "";
 
   var active =
     cfg.textlineMarquee && textEl.scrollWidth > textEl.clientWidth;
-  if (active === lastMarqueeActive) return;
+
+  if (active === lastMarqueeActive) {
+    // State unchanged: restore correct display and leave animation alone.
+    textEl.style.display = active ? "none" : "";
+    return;
+  }
+
   lastMarqueeActive = active;
   if (active) {
     textEl.style.display = "none";
@@ -90,10 +113,14 @@ function render(track) {
   var artist = currentTrack.artist || "";
   var text =
     title && artist ? title + " By " + artist : title || artist || "";
-  textEl.textContent = text;
-  var copies = marqueeEl ? marqueeEl.querySelectorAll(".tl-marquee-text") : [];
-  for (var i = 0; i < copies.length; i++) {
-    copies[i].textContent = text;
+
+  if (text !== lastText) {
+    lastText = text;
+    textEl.textContent = text;
+    var copies = marqueeEl ? marqueeEl.querySelectorAll(".tl-marquee-text") : [];
+    for (var i = 0; i < copies.length; i++) {
+      copies[i].textContent = text;
+    }
   }
   applyStyle();
   if (marqueeRaf) cancelAnimationFrame(marqueeRaf);
@@ -112,6 +139,10 @@ function destroy() {
   currentTrack = null;
   marqueeRaf = null;
   lastMarqueeActive = null;
+  lastFontSize = null;
+  lastColor = null;
+  lastMaxW = null;
+  lastText = null;
 }
 
 export { init, render, destroy };
