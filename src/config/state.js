@@ -150,6 +150,8 @@ export const DEFAULT_STATE = {
   textlineBgOpacity: 0,
   textlineMarquee: false,
   textlineMarqueeDir: "rtl",
+  textlineIdleEnabled: true,
+  textlineIdleText: "No songs playing",
 };
 
 /** Seeds custom editor from sidebar state (custom layout). */

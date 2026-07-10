@@ -803,6 +803,8 @@ export function parseConfig() {
     textlineBgOpacity: Number(params.get("textlineBgOpacity")) || 0,
     textlineMarquee: params.get("textlineMarquee") === "1",
     textlineMarqueeDir: params.get("textlineMarqueeDir") === "ltr" ? "ltr" : "rtl",
+    textlineIdleEnabled: toBool(params.get("textlineIdleEnabled"), true),
+    textlineIdleText: params.get("textlineIdleText") || "No songs playing",
     custom,
   };
 }
@@ -1266,6 +1268,28 @@ function showIdle() {
   }
 
   cancelExit();
+
+  // Text Line: show an idle message instead of removing the overlay.
+  if (isSpecialLayout(config.layout) && config.layout === "textline" && config.textlineIdleEnabled) {
+    const preset = activeSpecialPreset;
+    const tlRoot = document.querySelector(".tl-wrap");
+    if (preset?.render && tlRoot) {
+      preset.render({ title: config.textlineIdleText || "No songs playing", artist: "", isIdle: true });
+      wasPlaying = false;
+      tlRoot.style.visibility = "";
+      tlRoot.style.opacity = "1";
+      tlRoot.removeAttribute("data-hidden");
+      clearPerSongNextPeek();
+      disconnectOverflowMarquees();
+      removeAnimatedBackground();
+      removeAllArtBackdrops();
+      clearBeatSync(tlRoot);
+      clearMood(tlRoot);
+      import("../visuals/canvas.js").then(({ clearCanvas }) => clearCanvas()).catch(() => {});
+      return;
+    }
+  }
+
   const transitionRoot = getPlaybackTransitionRoot();
   if (transitionRoot) {
     initTransitions(transitionRoot);

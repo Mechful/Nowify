@@ -824,6 +824,12 @@ function renderStyleContent() {
       <div class="cfg-btn-group" style="margin-top:6px">
         <button class="cfg-btn cfg-sm-btn ${state.textlineMarqueeDir === "rtl" ? "cfg-active" : ""}" data-set-key="textlineMarqueeDir" data-set-value="rtl">RTL</button>
         <button class="cfg-btn cfg-sm-btn ${state.textlineMarqueeDir === "ltr" ? "cfg-active" : ""}" data-set-key="textlineMarqueeDir" data-set-value="ltr">LTR</button>
+      </div>
+      <div class="cfg-section-sep"></div>
+      <div class="cfg-sub-label">Idle</div>
+      ${compactToggle("Idle message", "textlineIdleEnabled", true, "Show a message when nothing is playing")}
+      <div class="cfg-inline-row" style="margin-top:6px">
+        <input id="ctrl-textline-idle-text" class="cfg-input cfg-input-sm" type="text" placeholder="No songs playing" value="${escCfg(state.textlineIdleText || "No songs playing")}" autocomplete="off" spellcheck="false" />
       </div>`;
     }
     return "";

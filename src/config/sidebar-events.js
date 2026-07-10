@@ -112,6 +112,10 @@ export function patchSidebarValues() {
   if (bgOpacitySlider) {
     bgOpacitySlider.value = state.textlineBgOpacity || 0;
   }
+  const idleTextInput = document.getElementById("ctrl-textline-idle-text");
+  if (idleTextInput) {
+    idleTextInput.value = state.textlineIdleText || "No songs playing";
+  }
 }
 
 function getRoleLabel(role) {
@@ -410,6 +414,11 @@ export function initMainSidebarEvents(updateFn, callbacks = {}) {
           updateFn({ textlineBgOpacity: val });
         }
       }, 100);
+      return;
+    }
+
+    if (target.id === "ctrl-textline-idle-text") {
+      updateFn({ textlineIdleText: target.value });
       return;
     }
 
