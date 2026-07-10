@@ -1,6 +1,8 @@
 .tl-wrap {
-  display: inline-block;
-  max-width: 100%;
+  display: block;
+  width: 100%;
+  max-width: min(85vw, 480px);
+  overflow: hidden;
   will-change: opacity, transform, filter;
 }
 .tl-text {
@@ -11,19 +13,32 @@
   text-overflow: ellipsis;
   line-height: 1.2;
 }
-.tl-text.tl-marquee-rtl {
-  text-overflow: clip;
+.tl-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+.tl-marquee-inner {
+  display: inline-flex;
+  gap: 3rem;
+  white-space: nowrap;
+  will-change: transform;
+}
+.tl-marquee-text {
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.tl-marquee-rtl .tl-marquee-inner {
   animation: tl-marquee-rtl 12s linear infinite;
 }
-.tl-text.tl-marquee-ltr {
-  text-overflow: clip;
+.tl-marquee-ltr .tl-marquee-inner {
   animation: tl-marquee-ltr 12s linear infinite;
 }
 @keyframes tl-marquee-rtl {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  100% { transform: translateX(-50%); }
 }
 @keyframes tl-marquee-ltr {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(100%); }
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
