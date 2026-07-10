@@ -815,6 +815,7 @@ function renderStyleContent() {
         <button type="button" class="cfg-btn cfg-sm-btn ${state.textlineFontFamily === "mono" ? "cfg-active" : ""}" data-set-key="textlineFontFamily" data-set-value="mono">Mono</button>
         <button type="button" class="cfg-btn cfg-sm-btn ${state.textlineFontFamily === "serif" ? "cfg-active" : ""}" data-set-key="textlineFontFamily" data-set-value="serif">Serif</button>
       </div>
+      ${compactToggle("Song art", "textlineShowArt", true, "Show the album cover before the text")}
       <div class="cfg-section-sep"></div>
       <div class="cfg-sub-label">Background</div>
       <div class="cfg-inline-row">

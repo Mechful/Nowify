@@ -151,6 +151,7 @@ export const DEFAULT_STATE = {
   textlineMarquee: false,
   textlineMarqueeDir: "rtl",
   textlineFontFamily: "inter",
+  textlineShowArt: true,
   textlineIdleEnabled: true,
   textlineIdleText: "No songs playing",
 };

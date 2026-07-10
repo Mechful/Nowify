@@ -1,6 +1,7 @@
 let cfg = {};
 let rootEl = null;
 let textEl = null;
+let artEl = null;
 let marqueeEl = null;
 let marqueeInner = null;
 let currentTrack = null;
@@ -11,6 +12,7 @@ let lastColor = null;
 let lastFont = null;
 let lastMaxW = null;
 let lastText = null;
+let lastArt = null;
 
 function fontFamilyFor(key) {
   if (key === "system") return 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
@@ -24,7 +26,8 @@ function init(config) {
   const app = document.getElementById("app");
   if (!app) return;
   app.innerHTML =
-    '<div class="tl-wrap"><div class="tl-text" id="tl-text"></div>' +
+    '<div class="tl-wrap"><img class="tl-art" id="tl-art" alt="" />' +
+    '<div class="tl-text" id="tl-text"></div>' +
     '<div class="tl-marquee" id="tl-marquee" style="display:none">' +
     '<div class="tl-marquee-inner" id="tl-marquee-inner">' +
     '<span class="tl-marquee-text"></span>' +
@@ -32,6 +35,7 @@ function init(config) {
     "</div></div></div>";
   rootEl = app.querySelector(".tl-wrap");
   textEl = document.getElementById("tl-text");
+  artEl = document.getElementById("tl-art");
   marqueeEl = document.getElementById("tl-marquee");
   marqueeInner = document.getElementById("tl-marquee-inner");
   applyStyle();
@@ -41,6 +45,13 @@ function applyStyle() {
   if (!textEl) return;
   var fontSize = (cfg.textlineFontSize || 28) + "px";
   var color = cfg.textlineColor || "#ffffff";
+
+  var fs = Number(cfg.textlineFontSize) || 28;
+  if (rootEl) {
+    rootEl.style.display = "flex";
+    rootEl.style.alignItems = "center";
+    rootEl.style.gap = Math.max(4, Math.round(fs * 0.35)) + "px";
+  }
 
   if (fontSize !== lastFontSize) {
     textEl.style.fontSize = fontSize;
@@ -74,6 +85,14 @@ function applyStyle() {
   if (maxW !== lastMaxW) {
     rootEl.style.maxWidth = maxW + "px";
     lastMaxW = maxW;
+  }
+
+  if (artEl) {
+    artEl.style.width = fs + "px";
+    artEl.style.height = fs + "px";
+    artEl.style.borderRadius = Math.max(2, Math.round(fs * 0.12)) + "px";
+    artEl.style.objectFit = "cover";
+    artEl.style.flex = "0 0 auto";
   }
 
   var bgColor = cfg.textlineBgColor || "#000000";
@@ -132,6 +151,19 @@ function render(track) {
   var text =
     title && artist ? title + " By " + artist : title || artist || "";
 
+  if (artEl) {
+    var showArt = cfg.textlineShowArt !== false && currentTrack.albumArt;
+    if (showArt !== lastArt) {
+      lastArt = showArt;
+      artEl.style.display = showArt ? "block" : "none";
+    }
+    if (showArt) {
+      artEl.src = currentTrack.albumArt;
+    } else {
+      artEl.removeAttribute("src");
+    }
+  }
+
   if (text !== lastText) {
     lastText = text;
     textEl.textContent = text;
@@ -152,6 +184,7 @@ function destroy() {
   cfg = {};
   rootEl = null;
   textEl = null;
+  artEl = null;
   marqueeEl = null;
   marqueeInner = null;
   currentTrack = null;
@@ -162,6 +195,7 @@ function destroy() {
   lastFont = null;
   lastMaxW = null;
   lastText = null;
+  lastArt = null;
 }
 
 export { init, render, destroy };

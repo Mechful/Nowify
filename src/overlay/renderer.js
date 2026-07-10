@@ -804,6 +804,7 @@ export function parseConfig() {
     textlineMarquee: params.get("textlineMarquee") === "1",
     textlineMarqueeDir: params.get("textlineMarqueeDir") === "ltr" ? "ltr" : "rtl",
     textlineFontFamily: params.get("textlineFontFamily") || "inter",
+    textlineShowArt: toBool(params.get("textlineShowArt"), true),
     textlineIdleEnabled: toBool(params.get("textlineIdleEnabled"), true),
     textlineIdleText: params.get("textlineIdleText") || "No songs playing",
     custom,
