@@ -807,6 +807,23 @@ function renderStyleContent() {
       <div class="cfg-sub-label" style="margin-top:10px">Text color</div>
       <div class="cfg-inline-row">
         <input id="ctrl-textline-color" type="color" value="${state.textlineColor || "#ffffff"}" />
+      </div>
+      <div class="cfg-section-sep"></div>
+      <div class="cfg-sub-label">Background</div>
+      <div class="cfg-inline-row">
+        <input id="ctrl-textline-bg-color" type="color" value="${state.textlineBgColor || "#000000"}" />
+      </div>
+      <div class="cfg-slider-row">
+        <span class="cfg-slider-label">Opacity</span>
+        <input id="ctrl-textline-bg-opacity" type="range" min="0" max="100" step="5" value="${state.textlineBgOpacity || 0}" />
+        <span class="cfg-slider-val" id="ctrl-textline-bg-opacity-val">${state.textlineBgOpacity || 0}%</span>
+      </div>
+      <div class="cfg-section-sep"></div>
+      <div class="cfg-sub-label">Marquee</div>
+      ${compactToggle("Scroll long text", "textlineMarquee", true, "Animate when text overflows")}
+      <div class="cfg-btn-group" style="margin-top:6px">
+        <button class="cfg-btn cfg-sm-btn ${state.textlineMarqueeDir === "rtl" ? "cfg-active" : ""}" data-set-key="textlineMarqueeDir" data-set-value="rtl">RTL</button>
+        <button class="cfg-btn cfg-sm-btn ${state.textlineMarqueeDir === "ltr" ? "cfg-active" : ""}" data-set-key="textlineMarqueeDir" data-set-value="ltr">LTR</button>
       </div>`;
     }
     return "";

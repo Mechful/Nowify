@@ -1,4 +1,6 @@
 .tl-wrap {
+  display: inline-block;
+  max-width: 100%;
   will-change: opacity, transform, filter;
 }
 .tl-text {
@@ -8,4 +10,20 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2;
+}
+.tl-text.tl-marquee-rtl {
+  text-overflow: clip;
+  animation: tl-marquee-rtl 12s linear infinite;
+}
+.tl-text.tl-marquee-ltr {
+  text-overflow: clip;
+  animation: tl-marquee-ltr 12s linear infinite;
+}
+@keyframes tl-marquee-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+@keyframes tl-marquee-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
 }

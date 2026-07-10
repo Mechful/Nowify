@@ -799,6 +799,10 @@ export function parseConfig() {
     lastfmApiKey: params.get("lastfmApiKey") || "",
     textlineFontSize: Number(params.get("textlineFontSize")) || 28,
     textlineColor: params.get("textlineColor") || "#ffffff",
+    textlineBgColor: params.get("textlineBgColor") || "#000000",
+    textlineBgOpacity: Number(params.get("textlineBgOpacity")) || 0,
+    textlineMarquee: params.get("textlineMarquee") === "1",
+    textlineMarqueeDir: params.get("textlineMarqueeDir") === "ltr" ? "ltr" : "rtl",
     custom,
   };
 }

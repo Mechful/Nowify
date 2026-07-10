@@ -146,6 +146,10 @@ export const DEFAULT_STATE = {
   artBackdropBlur: 48,
   textlineFontSize: 28,
   textlineColor: "#ffffff",
+  textlineBgColor: "#000000",
+  textlineBgOpacity: 0,
+  textlineMarquee: false,
+  textlineMarqueeDir: "rtl",
 };
 
 /** Seeds custom editor from sidebar state (custom layout). */

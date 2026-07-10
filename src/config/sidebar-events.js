@@ -15,6 +15,7 @@ let transitionExitDurDebounceTimer = null;
 let transitionExitDelayDebounceTimer = null;
 let twitchCmdSliderDebounceTimer = null;
 const textlineFontSizeTimer = { value: null };
+const textlineBgOpacityTimer = { value: null };
 let mainSidebarBound = false;
 let queueSidebarBound = false;
 
@@ -97,6 +98,19 @@ export function patchSidebarValues() {
   const colorPicker = document.getElementById("ctrl-textline-color");
   if (colorPicker) {
     colorPicker.value = state.textlineColor || "#ffffff";
+  }
+
+  const bgColorPicker = document.getElementById("ctrl-textline-bg-color");
+  if (bgColorPicker) {
+    bgColorPicker.value = state.textlineBgColor || "#000000";
+  }
+  const bgOpacityVal = document.getElementById("ctrl-textline-bg-opacity-val");
+  if (bgOpacityVal) {
+    bgOpacityVal.textContent = (state.textlineBgOpacity || 0) + "%";
+  }
+  const bgOpacitySlider = document.getElementById("ctrl-textline-bg-opacity");
+  if (bgOpacitySlider) {
+    bgOpacitySlider.value = state.textlineBgOpacity || 0;
   }
 }
 
@@ -260,6 +274,11 @@ export function initMainSidebarEvents(updateFn, callbacks = {}) {
       return;
     }
 
+    if (target.id === "ctrl-textline-bg-color") {
+      updateFn({ textlineBgColor: target.value });
+      return;
+    }
+
     if (target.id === "ctrl-songifyPort") {
       const val = Number(target.value);
       if (Number.isInteger(val) && val >= 1024 && val <= 65535) {
@@ -372,6 +391,25 @@ export function initMainSidebarEvents(updateFn, callbacks = {}) {
 
     if (target.id === "ctrl-textline-color") {
       updateFn({ textlineColor: target.value });
+      return;
+    }
+
+    if (target.id === "ctrl-textline-bg-color") {
+      updateFn({ textlineBgColor: target.value });
+      return;
+    }
+
+    if (target.id === "ctrl-textline-bg-opacity") {
+      var val = Number(target.value);
+      var label = document.getElementById("ctrl-textline-bg-opacity-val");
+      if (label && Number.isFinite(val)) {
+        label.textContent = val + "%";
+      }
+      handleRangeDebounce(textlineBgOpacityTimer, function () {
+        if (Number.isFinite(val)) {
+          updateFn({ textlineBgOpacity: val });
+        }
+      }, 100);
       return;
     }
 
