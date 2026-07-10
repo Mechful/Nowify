@@ -18,8 +18,10 @@
   width: 100%;
 }
 .tl-marquee-inner {
-  display: inline-flex;
+  display: flex;
+  width: max-content;
   white-space: nowrap;
+  line-height: 1.2;
   will-change: transform;
 }
 .tl-marquee-text {
